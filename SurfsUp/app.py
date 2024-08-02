@@ -43,7 +43,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def homepage():
-     """All available API routes."""
+     """All available routes."""
      return (
          f"Welcome to SurfsUp API<br/>"
          f"Available Routes:<br/>"
@@ -86,7 +86,7 @@ def precipitation():
      past_year_data = dt.datetime.strptime(recent_date, '%Y-%m-%d') - dt.timedelta(days=365)
 
      # Perform a query to retrieve the data and precipitation scores
-     prcp_scores = session.query(Measurement.date, Measurement.prcp).\
+     precipitation_scores = session.query(Measurement.date, Measurement.prcp).\
                      filter(Measurement.date >= past_year_data).\
                      order_by(Measurement.date).all()
     
@@ -95,7 +95,7 @@ def precipitation():
     
      # Create a dictionary using date as the key and prcp as the value
      precipitation_dict = {}
-     for date, prcp in prcp_scores:
+     for date, prcp in precipitation_scores:
          precipitation_dict[date] = prcp
     
          # Return the JSON representation of dictionary.
@@ -104,7 +104,7 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-     """Get a list of stations"""
+     """List of stations"""
     
      # Create our session (link) from Python to the DB
      session = Session(engine)
